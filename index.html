@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>body { font-family: 'Poppins', sans-serif; } .brand-font { font-family: 'Playfair Display', serif; }</style>
 </head>
-<body class="bg-stone-100 text-stone-800 pb-28">
+<body class="bg-stone-100 text-stone-800 pb-28" onload="initApp()">
     <header class="bg-amber-950 text-amber-100 p-4 shadow-md flex justify-between items-center sticky top-0 z-50">
         <div class="flex items-center gap-2">
             <span class="text-2xl">🍛</span>
@@ -36,6 +36,9 @@
                         <button onclick="orderItem('Odia Dalma Thali', 120, 'SATVIK')" class="bg-amber-900 text-white text-[10px] font-bold px-3 py-1 rounded">Order Now</button>
                     </div>
                 </div>
+            </div>
+            <div class="text-center mt-2">
+                <button onclick="resetData()" class="text-[9px] text-rose-500 underline font-bold uppercase tracking-wider">⚠ Factory Reset Memory</button>
             </div>
         </section>
 
@@ -93,14 +96,46 @@
     </nav>
 
     <script>
-        let db = []; let wallet = 500.00; let sales = 0.00; let idx = 5001;
+        // MEMORY ENGINE INJECTED HERE
+        let db = JSON.parse(localStorage.getItem('gkk_db')) || [];
+        let wallet = parseFloat(localStorage.getItem('gkk_wallet')) || 500.00;
+        let sales = parseFloat(localStorage.getItem('gkk_sales')) || 0.00;
+        let idx = parseInt(localStorage.getItem('gkk_idx')) || 5001;
+
+        function saveState() {
+            localStorage.setItem('gkk_db', JSON.stringify(db));
+            localStorage.setItem('gkk_wallet', wallet.toString());
+            localStorage.setItem('gkk_sales', sales.toString());
+            localStorage.setItem('gkk_idx', idx.toString());
+        }
+
+        function initApp() {
+            document.getElementById('w-bal').innerText = "₹" + wallet.toFixed(2);
+            document.getElementById('a-rev').innerText = "₹" + sales.toFixed(2);
+            document.getElementById('a-count').innerText = db.length;
+            render();
+        }
+
+        function resetData() {
+            if(confirm("Erase all data and start over?")) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+
         function showView(target) {
             const views = ['customer', 'kitchen', 'dispatch', 'riders', 'store', 'vendor', 'admin', 'hmi'];
             views.forEach(v => document.getElementById('view-' + v).classList.add('hidden'));
             document.getElementById('view-' + target).classList.remove('hidden');
             document.getElementById('badge').innerText = target;
         }
-        function addFunds() { wallet += 500; document.getElementById('w-bal').innerText = "₹" + wallet.toFixed(2); }
+
+        function addFunds() { 
+            wallet += 500; 
+            document.getElementById('w-bal').innerText = "₹" + wallet.toFixed(2); 
+            saveState();
+        }
+
         function orderItem(name, price, tag) {
             if(wallet < price) { alert("Insufficient Credits"); return; }
             wallet -= price; sales += price;
@@ -109,9 +144,14 @@
             let id = "ORD-" + idx++;
             db.push({ id: id, label: name, tag: tag, stage: 'KITCHEN' });
             document.getElementById('a-count').innerText = db.length;
-            render(); alert("Order Verified: " + id);
+            saveState(); render(); alert("Order Verified: " + id);
         }
-        function move(id, next) { let item = db.find(i => i.id === id); if(item) { item.stage = next; render(); } }
+
+        function move(id, next) { 
+            let item = db.find(i => i.id === id); 
+            if(item) { item.stage = next; saveState(); render(); } 
+        }
+
         function render() {
             const k = document.getElementById('kds-box'); k.innerHTML = db.filter(i=>i.stage==='KITCHEN').length===0 ? '<p class="text-xs text-stone-400 italic text-center py-4">No incoming dishes.</p>':"";
             db.filter(i=>i.stage==='KITCHEN').forEach(i=>{ k.innerHTML += `<div class="p-2 bg-stone-50 border rounded flex justify-between items-center text-xs"><div><p class="font-bold">${i.id}</p><p class="text-stone-500">${i.label}</p></div><button onclick="move('${i.id}','DISPATCH')" class="bg-amber-950 text-white text-[9px] font-bold px-2 py-1 rounded">Cooked</button></div>` });
