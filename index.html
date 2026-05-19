@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghar Ka Khaana - 8 Module Master</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Poppins', sans-serif; } .brand-font { font-family: 'Playfair Display', serif; }</style>
+</head>
+<body class="bg-stone-100 text-stone-800 pb-28">
+    <header class="bg-amber-950 text-amber-100 p-4 shadow-md flex justify-between items-center sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <span class="text-2xl">🍛</span>
+            <div>
+                <h1 class="brand-font text-base font-bold">Ghar Ka Khaana</h1>
+                <p class="text-[9px] text-amber-300 italic">8-Module Master Platform</p>
+            </div>
+        </div>
+        <div id="badge" class="bg-amber-800 px-2 py-0.5 rounded-full text-[9px] uppercase font-bold border border-amber-600">Customer</div>
+    </header>
+
+    <main class="max-w-md mx-auto p-4 space-y-4">
+        <section id="view-customer" class="space-y-3">
+            <div class="bg-gradient-to-r from-amber-900 to-stone-900 text-white p-4 rounded-xl flex justify-between items-center shadow-sm">
+                <div><p class="text-[9px] text-amber-300 uppercase font-bold tracking-wider">Eco-Wallet</p><h3 class="text-xl font-bold" id="w-bal">₹500.00</h3></div>
+                <button onclick="addFunds()" class="bg-amber-600 text-white text-[10px] font-bold px-3 py-1 rounded-lg">Load Cash</button>
+            </div>
+            <div class="bg-white p-3 rounded-xl border border-stone-200 flex gap-3">
+                <div class="w-16 h-16 bg-amber-50 rounded-lg flex items-center justify-center text-xl shrink-0">🥣</div>
+                <div class="flex-1">
+                    <span class="text-[9px] bg-yellow-100 text-yellow-800 px-1.5 py-0.5 rounded font-bold uppercase">Satvik</span>
+                    <h4 class="font-bold text-xs mt-0.5">Premium Odia Dalma Thali</h4>
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="text-amber-950 font-bold text-xs">₹120</span>
+                        <button onclick="orderItem('Odia Dalma Thali', 120, 'SATVIK')" class="bg-amber-900 text-white text-[10px] font-bold px-3 py-1 rounded">Order Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-kitchen" class="hidden space-y-3">
+            <div class="bg-white p-4 rounded-xl border border-stone-200">
+                <h3 class="text-xs font-bold text-stone-400 uppercase tracking-wider border-b pb-1.5">Kitchen Display System (KDS)</h3>
+                <div id="kds-box" class="mt-2 space-y-2"><p class="text-xs text-stone-400 italic text-center py-4">No incoming dishes.</p></div>
+            </div>
+        </section>
+
+        <section id="view-dispatch" class="hidden space-y-3">
+            <div class="bg-white p-4 rounded-xl border border-stone-200">
+                <h3 class="text-xs font-bold text-stone-400 uppercase tracking-wider border-b pb-1.5">Dispatch Center</h3>
+                <div id="dispatch-box" class="mt-2 space-y-2"><p class="text-xs text-stone-400 italic text-center py-4">No parcels ready.</p></div>
+            </div>
+        </section>
+
+        <section id="view-riders" class="hidden space-y-3">
+            <div class="bg-white p-4 rounded-xl border border-stone-200">
+                <h3 class="text-xs font-bold text-stone-400 uppercase tracking-wider border-b pb-1.5">Delivery Partner App</h3>
+                <div id="riders-box" class="mt-2 space-y-2"><p class="text-xs text-stone-400 italic text-center py-4">No assigned tasks.</p></div>
+            </div>
+        </section>
+
+        <section id="view-store" class="hidden p-4 bg-white rounded-xl border border-stone-200">
+            <h3 class="text-xs font-bold text-stone-400 uppercase tracking-wider border-b pb-1.5">Store Manager</h3>
+            <div class="mt-2 flex justify-between items-center text-xs"><p class="font-semibold">Premium Basmati Rice</p><span class="text-emerald-600 font-bold">120 KG [STABLE]</span></div>
+        </section>
+
+        <section id="view-vendor" class="hidden p-4 bg-white rounded-xl border border-stone-200">
+            <h3 class="text-xs font-bold text-stone-400 uppercase tracking-wider border-b pb-1.5">Vendor Blockchain Ledger</h3>
+            <p class="text-[11px] text-stone-600 font-mono bg-stone-50 p-2 rounded border">Smart Contract Settlement Connection: Verified ✓</p>
+        </section>
+
+        <section id="view-admin" class="hidden p-4 bg-white rounded-xl border border-stone-200 text-center space-y-2">
+            <h3 class="text-xs font-bold text-stone-400 uppercase tracking-wider border-b pb-1.5">Admin Analytics</h3>
+            <div class="grid grid-cols-2 gap-2"><div class="p-2 bg-stone-50 rounded"><p class="text-[10px] text-stone-400">SALES</p><p class="text-base font-bold" id="a-rev">₹0.00</p></div><div class="p-2 bg-stone-50 rounded"><p class="text-[10px] text-stone-400">ORDERS</p><p class="text-base font-bold" id="a-count">0</p></div></div>
+        </section>
+
+        <section id="view-hmi" class="hidden p-4 bg-white rounded-xl border border-stone-200">
+            <h3 class="text-xs font-bold text-stone-400 uppercase tracking-wider border-b pb-1.5">HMI Operations Switch</h3>
+            <button class="w-full bg-emerald-600 text-white text-xs font-bold py-2 rounded-lg mt-2">GLOBAL ECOSYSTEM: ONLINE</button>
+        </section>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 shadow-2xl flex px-2 py-2 gap-2 max-w-md mx-auto z-50 overflow-x-auto scrollbar-none">
+        <button onclick="showView('customer')" class="flex flex-col items-center px-3 shrink-0"><span class="text-base">📱</span><span class="text-[9px] font-bold">Customer</span></button>
+        <button onclick="showView('kitchen')" class="flex flex-col items-center px-3 shrink-0"><span class="text-base">🧑‍🍳</span><span class="text-[9px] font-bold">KDS</span></button>
+        <button onclick="showView('dispatch')" class="flex flex-col items-center px-3 shrink-0"><span class="text-base">📦</span><span class="text-[9px] font-bold">Dispatch</span></button>
+        <button onclick="showView('riders')" class="flex flex-col items-center px-3 shrink-0"><span class="text-base">🚛</span><span class="text-[9px] font-bold">Riders</span></button>
+        <button onclick="showView('store')" class="flex flex-col items-center px-3 shrink-0"><span class="text-base">🌾</span><span class="text-[9px] font-bold">Store</span></button>
+        <button onclick="showView('vendor')" class="flex flex-col items-center px-3 shrink-0"><span class="text-base">⛓️</span><span class="text-[9px] font-bold">Vendors</span></button>
+        <button onclick="showView('admin')" class="flex flex-col items-center px-3 shrink-0"><span class="text-base">📊</span><span class="text-[9px] font-bold">Admin</span></button>
+        <button onclick="showView('hmi')" class="flex flex-col items-center px-3 shrink-0"><span class="text-base">⚙️</span><span class="text-[9px] font-bold">HMI</span></button>
+    </nav>
+
+    <script>
+        let db = []; let wallet = 500.00; let sales = 0.00; let idx = 5001;
+        function showView(target) {
+            const views = ['customer', 'kitchen', 'dispatch', 'riders', 'store', 'vendor', 'admin', 'hmi'];
+            views.forEach(v => document.getElementById('view-' + v).classList.add('hidden'));
+            document.getElementById('view-' + target).classList.remove('hidden');
+            document.getElementById('badge').innerText = target;
+        }
+        function addFunds() { wallet += 500; document.getElementById('w-bal').innerText = "₹" + wallet.toFixed(2); }
+        function orderItem(name, price, tag) {
+            if(wallet < price) { alert("Insufficient Credits"); return; }
+            wallet -= price; sales += price;
+            document.getElementById('w-bal').innerText = "₹" + wallet.toFixed(2);
+            document.getElementById('a-rev').innerText = "₹" + sales.toFixed(2);
+            let id = "ORD-" + idx++;
+            db.push({ id: id, label: name, tag: tag, stage: 'KITCHEN' });
+            document.getElementById('a-count').innerText = db.length;
+            render(); alert("Order Verified: " + id);
+        }
+        function move(id, next) { let item = db.find(i => i.id === id); if(item) { item.stage = next; render(); } }
+        function render() {
+            const k = document.getElementById('kds-box'); k.innerHTML = db.filter(i=>i.stage==='KITCHEN').length===0 ? '<p class="text-xs text-stone-400 italic text-center py-4">No incoming dishes.</p>':"";
+            db.filter(i=>i.stage==='KITCHEN').forEach(i=>{ k.innerHTML += `<div class="p-2 bg-stone-50 border rounded flex justify-between items-center text-xs"><div><p class="font-bold">${i.id}</p><p class="text-stone-500">${i.label}</p></div><button onclick="move('${i.id}','DISPATCH')" class="bg-amber-950 text-white text-[9px] font-bold px-2 py-1 rounded">Cooked</button></div>` });
+            const ds = document.getElementById('dispatch-box'); ds.innerHTML = db.filter(i=>i.stage==='DISPATCH').length===0 ? '<p class="text-xs text-stone-400 italic text-center py-4">No parcels ready.</p>':"";
+            db.filter(i=>i.stage==='DISPATCH').forEach(i=>{ ds.innerHTML += `<div class="p-2 bg-stone-50 border rounded flex justify-between items-center text-xs"><div><p class="font-bold">${i.id}</p></div><button onclick="move('${i.id}','RIDERS')" class="bg-amber-900 text-white text-[9px] font-bold px-2 py-1 rounded">Route Fleet</button></div>` });
+            const r = document.getElementById('riders-box'); r.innerHTML = db.filter(i=>i.stage==='RIDERS').length===0 ? '<p class="text-xs text-stone-400 italic text-center py-4">No assigned tasks.</p>':"";
+            db.filter(i=>i.stage==='RIDERS').forEach(i=>{ r.innerHTML += `<div class="p-2 bg-emerald-50 border border-emerald-200 rounded flex justify-between items-center text-xs"><div><p class="font-bold text-emerald-900">${i.id}</p></div><button onclick="move('${i.id}','DONE')" class="bg-emerald-700 text-white text-[9px] font-bold px-2 py-1 rounded">Swipe Delivered</button></div>` });
+        }
+    </script>
+</body>
+</html>
