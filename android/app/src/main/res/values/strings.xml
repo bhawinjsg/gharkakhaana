@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Ghar Ka Khaana</string>
+    <string name="title_activity_main">Ghar Ka Khaana</string>
+    <string name="package_name">com.gharkakhaana.app</string>
+    <string name="custom_url_scheme">com.gharkakhaana.app</string>
+</resources>
